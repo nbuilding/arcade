@@ -55,10 +55,30 @@ function drawTile(tile, x, y) {
   }
 }
 loadImage('./otherstuff.png').then(init);
+      
+function transformKey(key) {
+  if (!navigator.userAgent.includes("Wii"))
+    return key;
+  
+  switch (key) {
+    case 175: // up
+      return 38;
+    case 176: // down
+      return 40;
+    case 177: // right
+      return 39;
+    case 178: // left
+      return 37;
+    default:
+      return key;
+  }
+}
 
 document.addEventListener('keydown', e => {
-  if (e.keyCode >= 37 && e.keyCode <= 40) {
-    player.orientation = e.keyCode - 37;
+  var keycode = transformKey(e.keyCode);
+  
+  if (keycode >= 37 && keycode <= 40) {
+    player.orientation = keycode - 37;
     player.move();
   }
 });
